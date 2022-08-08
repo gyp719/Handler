@@ -2,19 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mobile;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class MobileSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call([
-            MobileSeeder::class,
-        ]);
+        Mobile::factory()->count(1000)->create();
     }
 }
