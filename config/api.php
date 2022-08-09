@@ -8,6 +8,11 @@ return [
             'appid' => env('BAIDU_TRANSLATE_APPID'),
             'key'   => env('BAIDU_TRANSLATE_KEY'),
         ],
+        // OCR
+        'ocr'       => [
+            'client_id'     => env('BAIDU_CLIENT_ID'),
+            'client_secret' => env('BAIDU_CLIENT_SECRET'),
+        ],
 
     ],
 
