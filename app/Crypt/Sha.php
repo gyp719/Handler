@@ -25,14 +25,14 @@ class Sha
 //return $sha->verifySign($headers);
 
 
-    // 时间误差
+    // 时间误差, 0-不限制
     protected int $timeError;
     // 密钥
     protected $key;
 
     public function __construct()
     {
-        $this->timeError = 100000;
+        $this->timeError = 0;
         $this->key       = config('app.sha_key');
     }
 
@@ -100,7 +100,7 @@ class Sha
         if (empty($headers['Api-Sign'])) {
             throw new InvalidRequestException('Api-Sign 不存在');
         }
-        if (!$this->allowTimestamp($headers['Api-Timestamp'])) {
+        if ($this->timeError && !$this->allowTimestamp($headers['Api-Timestamp'])) {
             throw new InvalidRequestException('Api-Timestamp 超时');
         }
         // 生成签名

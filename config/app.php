@@ -32,6 +32,8 @@ return [
     'sha_appid' => env('SHA_APPID', 'jtRJ5qoz1wIDvQkX'),
     'sha_key'   => env('SHA_KEY'),
 
+    'aes' => env('AES_SECRET_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
