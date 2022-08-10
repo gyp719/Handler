@@ -28,6 +28,10 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    // HMAC-SHA256 https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=20_1
+    'sha_appid' => env('SHA_APPID', 'jtRJ5qoz1wIDvQkX'),
+    'sha_key'   => env('SHA_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
