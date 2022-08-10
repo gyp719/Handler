@@ -75,7 +75,7 @@ class Aes
      * 签名验证
      * @throws InvalidRequestException
      */
-    public function verifySign($data, $headers)
+    public function verifySign($data, $headers): bool
     {
         if (empty($headers['sign'])) {
             throw new InvalidRequestException('sign 不存在');
