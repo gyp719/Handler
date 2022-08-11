@@ -197,6 +197,63 @@ class SmsHandler
         return $response->json();
     }
 
+    public function sendSms_11($mobile, $send_type = 'random')
+    {
+        $url      = 'https://mall.zhongxiang51.com/order/zxmall/sms/sms';
+        $response = Http::asForm()->post($url, [
+            'phoneNumber' => $mobile,
+        ]);
+
+        if ($response['code']) {
+            logger('[白领优拼] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[白领优拼] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_12($mobile, $send_type = 'random')
+    {
+        $url      = 'https://api.store.lining.com/userc/v1/user/verification/code/getPhoneCode';
+        $response = Http::post($url, [
+            'receiver' => $mobile,
+            'scene'    => 'LOGIN',
+            'saasId'   => '8324992625302181585',
+            'source'   => '2',
+        ]);
+
+        if (!$response['success']) {
+            logger('[李宁官网] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[李宁官网] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_13($mobile, $send_type = 'random')
+    {
+        $url      = 'https://ucmp.sf-express.com/wxopen/weixin/sendLoginCode?mobile='.$mobile;
+        $response = Http::post($url);
+
+        if ($response['errorCode']) {
+            logger('[顺丰速运] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[顺丰速运] '.$response);
+        }
+
+        return $response->json();
+    }
+
+
+
     public function sendSms($mobile): \Illuminate\Http\JsonResponse
     {
         $this->sendSms_1($mobile);
@@ -209,6 +266,9 @@ class SmsHandler
         $this->sendSms_8($mobile);
         $this->sendSms_9($mobile);
         $this->sendSms_10($mobile);
+        $this->sendSms_11($mobile);
+        $this->sendSms_12($mobile);
+        $this->sendSms_13($mobile);
 
         return response()->json(['code' => 200, 'msg' => '发送完成']);
     }
