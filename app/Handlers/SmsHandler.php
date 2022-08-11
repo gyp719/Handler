@@ -139,6 +139,64 @@ class SmsHandler
         return $response->json();
     }
 
+    public function sendSms_8($mobile, $send_type = 'random')
+    {
+        $url      = 'http://www.jinghai-ic.com/register.aspx/getcode';
+        $response = Http::withHeaders([
+            'X-Requested-With' => 'XMLHttpRequest',
+        ])->post($url, [
+            'strphone' => $mobile,
+        ]);
+
+        if ($response['d'] != 'suc') {
+            logger('[京海商城] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[京海商城] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_9($mobile, $send_type = 'random')
+    {
+        $url      = 'http://www.original-ic.com/register.aspx/getcode';
+        $response = Http::withHeaders([
+            'X-Requested-With' => 'XMLHttpRequest',
+        ])->post($url, [
+            'strphone' => $mobile,
+        ]);
+
+        if ($response['d'] != 'suc') {
+            logger('[世强芯半导体] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[世强芯半导体] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_10($mobile, $send_type = 'random')
+    {
+        $url      = 'https://res.hxbuy.com/verificationNoCaptchaCodes';
+        $response = Http::post($url, [
+            'mobile' => $mobile,
+        ]);
+
+        if ($response['status_code'] != 200) {
+            logger('[华芯商城] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[华芯商城] '.$response);
+        }
+
+        return $response->json();
+    }
+
     public function sendSms($mobile): \Illuminate\Http\JsonResponse
     {
         $this->sendSms_1($mobile);
@@ -148,6 +206,9 @@ class SmsHandler
         $this->sendSms_5($mobile);
         $this->sendSms_6($mobile);
         $this->sendSms_7($mobile);
+        $this->sendSms_8($mobile);
+        $this->sendSms_9($mobile);
+        $this->sendSms_10($mobile);
 
         return response()->json(['code' => 200, 'msg' => '发送完成']);
     }
