@@ -252,6 +252,139 @@ class SmsHandler
         return $response->json();
     }
 
+    public function sendSms_14($mobile, $send_type = 'random')
+    {
+        $url      = 'http://erp.yiya.art/api/v1/verificationCodes';
+        $response = Http::post($url, [
+            'phone' => $mobile,
+        ]);
+
+        if ($response['code'] != 200) {
+            logger('[易雅艺术] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[易雅艺术] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_15($mobile, $send_type = 'random')
+    {
+        $url      = 'https://api.octinn.com/account/send_verify_code';
+        $response = Http::withHeaders([
+            'OI-APPKEY' => 'b2fc67038bd1e30caf14850e926fb817',
+        ])->post($url, [
+            'phone' => "{$mobile}",
+            'type'  => 5,
+        ]);
+
+        if (isset($response['msg'])) {
+            logger('[生日管家] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[生日管家] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_16($mobile, $send_type = 'random')
+    {
+        $url      = 'https://wx.fangzongguan.com/fmwx/user/sendLogincode';
+        $response = Http::get($url, [
+            'phone' => $mobile,
+        ]);
+
+        if (!$response['success']) {
+            logger('[房总管] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[房总管] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_17($mobile, $send_type = 'random')
+    {
+        $url      = 'https://shop.lebai.cc/shopapi/login/captcha';
+        $response = Http::withHeaders([
+            'version' => '1.8.6',
+        ])->post($url, [
+            'mobile' => $mobile,
+        ]);
+
+        if (!$response['code']) {
+            logger('[创乐佰] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[创乐佰] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_18($mobile, $send_type = 'random')
+    {
+        $url      = 'https://szyrwl.com/steward/partner/user/getValidateCode';
+        $response = Http::asForm()->post($url, [
+            'mobileAccount' => $mobile,
+            'type'          => 2,
+        ]);
+
+        if ($response['errcode']) {
+            logger('[立行车管家] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[立行车管家] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_19($mobile, $send_type = 'random')
+    {
+        $url      = 'https://www.51marryyou.com/Index/getSmsCode';
+        $response = Http::asForm()->post($url, [
+            'phone' => $mobile,
+        ]);
+
+        if ($response['err']) {
+            logger('[迈优文化] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[迈优文化] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_20($mobile, $send_type = 'random')
+    {
+        $url      = 'https://hweb-personalcenter.huazhu.com/check/getMobileCheckNo';
+        $response = Http::post($url, [
+            'mobile'      => $mobile,
+            'mobilePlace' => 86,
+            'source'      => 2,
+        ]);
+
+        if ($response['businessCode'] != '1000') {
+            logger('[华住会] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[华住会] '.$response);
+        }
+
+        return $response->json();
+    }
 
 
     public function sendSms($mobile): \Illuminate\Http\JsonResponse
@@ -269,6 +402,13 @@ class SmsHandler
         $this->sendSms_11($mobile);
         $this->sendSms_12($mobile);
         $this->sendSms_13($mobile);
+        $this->sendSms_14($mobile);
+        $this->sendSms_15($mobile);
+        $this->sendSms_16($mobile);
+        $this->sendSms_17($mobile);
+        $this->sendSms_18($mobile);
+        $this->sendSms_19($mobile);
+        $this->sendSms_20($mobile);
 
         return response()->json(['code' => 200, 'msg' => '发送完成']);
     }
