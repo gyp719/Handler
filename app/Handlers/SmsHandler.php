@@ -386,6 +386,66 @@ class SmsHandler
         return $response->json();
     }
 
+    public function sendSms_21($mobile, $send_type = 'random')
+    {
+        $url      = 'https://lingdong.biz.weibo.com/open/v1/form/mobile-verify-code';
+        $response = Http::post($url, [
+            'mobile'    => $mobile,
+            'page_id'   => '2233719303234845',
+            'form_id'   => time(),
+            '_pagetype' => 'new-h5',
+        ]);
+
+        if ($response['code']) {
+            logger('[微博] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[微博] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_22($mobile, $send_type = 'random')
+    {
+        $url      = 'https://appapi.xicaishe.com/api/common/sendSmsCode';
+        $response = Http::post($url, [
+            'mobile' => $mobile,
+            'source' => 1,
+            'pageId' => 202128159255776217,
+        ]);
+
+        if ($response['code']) {
+            logger('[习财社] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[习财社] '.$response);
+        }
+
+        return $response->json();
+    }
+
+    public function sendSms_23($mobile, $send_type = 'random')
+    {
+        $url      = 'https://shop.ydedear.com/wap/Login/sendSmsRegisterCode.html';
+        $response = Http::withHeaders([
+            'x-requested-with' => 'XMLHttpRequest'
+        ])->post($url, [
+            'mobile' => $mobile,
+        ]);
+
+        if ($response['code']) {
+            logger('[亿蝶] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[亿蝶] '.$response);
+        }
+
+        return $response->json();
+    }
 
     public function sendSms($mobile): \Illuminate\Http\JsonResponse
     {
@@ -409,6 +469,9 @@ class SmsHandler
         $this->sendSms_18($mobile);
         $this->sendSms_19($mobile);
         $this->sendSms_20($mobile);
+        $this->sendSms_21($mobile);
+        $this->sendSms_22($mobile);
+        $this->sendSms_23($mobile);
 
         return response()->json(['code' => 200, 'msg' => '发送完成']);
     }
