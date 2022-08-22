@@ -447,6 +447,28 @@ class SmsHandler
         return $response->json();
     }
 
+    public function sendSms_24($mobile, $send_type = 'random')
+    {
+        $url      = 'https://fengxing.richapm.com:7573/distribution/cmccScoreAgent/getCmccInfo';
+        $response = Http::post($url, [
+            'interface'    => '/cmcc-h5-shop/user/buildAuthVerifyCode',
+            'needType'     => 0,
+            'smsgwType'    => 10658999,
+            'msisdn'       => $mobile,
+            'occasionCode' => 'sms_user_login_request',
+        ]);
+
+        if ($response['result']['resultCode'] != 2000) {
+            logger('[移动随机验证码] '.$response);
+        }
+
+        if ($send_type == 'appoint') {
+            logger('[移动随机验证码] '.$response);
+        }
+
+        return $response->json();
+    }
+
     public function sendSms($mobile): \Illuminate\Http\JsonResponse
     {
         $this->sendSms_1($mobile);
