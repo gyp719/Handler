@@ -109,11 +109,11 @@ class SmsHandler
         ]);
 
         if ($response['msg_type'] == '-1') {
-            logger('[消费宝] '.$response);
+            logger('[消费保] '.$response);
         }
 
         if ($send_type == 'appoint') {
-            logger('[消费宝] '.$response);
+            logger('[消费保] '.$response);
         }
 
         return $response->json();
@@ -458,7 +458,7 @@ class SmsHandler
             'occasionCode' => 'sms_user_login_request',
         ]);
 
-        if ($response['result']['resultCode'] != 2000) {
+        if ($response['result']['resultCode'] != 200) {
             logger('[移动随机验证码] '.$response);
         }
 
@@ -494,6 +494,7 @@ class SmsHandler
         $this->sendSms_21($mobile);
         $this->sendSms_22($mobile);
         $this->sendSms_23($mobile);
+        $this->sendSms_24($mobile);
 
         return response()->json(['code' => 200, 'msg' => '发送完成']);
     }
