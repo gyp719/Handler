@@ -45,3 +45,25 @@ function getSlicedArray($array, $n = 3, $key = ''): array
 
     return array_values(array_slice($array, 0, $n, true));
 }
+
+/**
+ * 将字符按照指定长度截取为多个
+ * @param $str
+ * @param  int  $groupSize 每组的字符数量
+ * @param  string  $encoding 字符串的字符编码
+ * @return array
+ */
+function getSlicedStrArray($str, int $groupSize = 8000, string $encoding = 'UTF-8'): array
+{
+    // 计算字符串中的字符数
+    $numChars = mb_strlen($str, $encoding);
+
+    $strArray = [];
+    // 循环处理字符串
+    for ($i = 0; $i < $numChars; $i += $groupSize) {
+        // 截断字符串
+        $strArray[] = mb_substr($str, $i, $groupSize, $encoding);;
+    }
+
+    return $strArray;
+}
